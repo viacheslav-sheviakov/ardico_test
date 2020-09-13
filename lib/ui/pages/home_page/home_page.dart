@@ -6,7 +6,9 @@ import 'package:ardico_test/resources/strings.dart';
 import 'package:ardico_test/ui/pages/link_data_page/link_data_page.dart';
 import 'package:ardico_test/ui/views/bottom_bar_button.dart';
 import 'package:ardico_test/ui/views/splash_view.dart';
+import 'package:ardico_test/utils/platform_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,6 +43,17 @@ class _HomePageState extends State<HomePage> {
       return NavigationDecision.prevent;
     }
     return NavigationDecision.navigate;
+  }
+
+  void _onTicketsButtonTapped() async {
+    final isLowerAndroid = await PlatformUtils.isAndroidSdkLower(28);
+    final canLoad = await canLaunch(Constants.aviaTicketsUrl);
+
+    if (isLowerAndroid && canLoad) {
+      launch(Constants.aviaTicketsUrl);
+    } else {
+      _webViewController?.loadUrl(Constants.aviaTicketsUrl);
+    }
   }
 
   @override
@@ -147,7 +160,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTicketsButton() {
     return BottomBarButton(
       text: Strings.ticketsButtonLabel,
-      onTap: () => _webViewController?.loadUrl(Constants.aviaTicketsUrl),
+      onTap: _onTicketsButtonTapped,
     );
   }
 }
