@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Expanded(
           child: SafeArea(
+            bottom: false,
             child: _buildWebView(),
           ),
         ),
@@ -111,8 +112,13 @@ class _HomePageState extends State<HomePage> {
       height: double.infinity,
       color: AppColors.primaryOpacity75,
       child: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryDark),
+        child: SizedBox(
+          width: 64.0,
+          height: 64.0,
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryDark),
+            strokeWidth: 6.0,
+          ),
         ),
       ),
     );
@@ -121,15 +127,18 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBottomBar() {
     return Material(
       color: AppColors.primary,
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildExploreButton(),
-          ),
-          Expanded(
-            child: _buildTicketsButton(),
-          ),
-        ],
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: [
+            Expanded(
+              child: _buildExploreButton(),
+            ),
+            Expanded(
+              child: _buildTicketsButton(),
+            ),
+          ],
+        ),
       ),
     );
   }
