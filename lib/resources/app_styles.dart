@@ -1,3 +1,4 @@
+import 'package:ardico_test/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppStyles {
@@ -28,4 +29,10 @@ class AppStyles {
       spreadRadius: 4.0,
     ),
   ];
+
+  static const infoPageText = TextStyle(
+    color: AppColors.primaryLight,
+    fontSize: 24.0,
+    fontWeight: FontWeight.w500,
+  );
 }

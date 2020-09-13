@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:ardico_test/resources/app_colors.dart';
 import 'package:ardico_test/resources/constants.dart';
 import 'package:ardico_test/resources/strings.dart';
+import 'package:ardico_test/ui/pages/link_data_page/link_data_page.dart';
 import 'package:ardico_test/ui/views/bottom_bar_button.dart';
 import 'package:ardico_test/ui/views/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +25,26 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _navigateToInfoPage(String info) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => LinkDataPage(info: info),
+      ),
+    );
+  }
+
+  FutureOr<NavigationDecision> _defineNavigation(NavigationRequest request) {
+    if (request.url.startsWith(Constants.russpassLinkPrefix)) {
+      _navigateToInfoPage(request.url);
+      return NavigationDecision.prevent;
+    }
+    return NavigationDecision.navigate;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primary,
       body: IndexedStack(
         index: _displayIndex,
         children: [
@@ -68,6 +88,7 @@ class _HomePageState extends State<HomePage> {
           },
           javascriptMode: JavascriptMode.unrestricted,
           initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+          navigationDelegate: _defineNavigation,
         ),
         if (_isWebViewLoading) _buildPositionedLoader(),
       ],
@@ -88,7 +109,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: AppColors.primaryOpacity50,
+      color: AppColors.primaryOpacity75,
       child: Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryDark),
@@ -116,14 +137,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildExploreButton() {
     return BottomBarButton(
       text: Strings.exploreButtonLabel,
-      onTap: () => _webViewController.loadUrl(Constants.exploreRusspassUrl),
+      onTap: () => _webViewController?.loadUrl(Constants.exploreRusspassUrl),
     );
   }
 
   Widget _buildTicketsButton() {
     return BottomBarButton(
       text: Strings.ticketsButtonLabel,
-      onTap: () => _webViewController.loadUrl(Constants.aviaTicketsUrl),
+      onTap: () => _webViewController?.loadUrl(Constants.aviaTicketsUrl),
     );
   }
 }
