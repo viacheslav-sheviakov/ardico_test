@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:ardico_test/resources/app_colors.dart';
 import 'package:ardico_test/resources/constants.dart';
 import 'package:ardico_test/resources/strings.dart';
-import 'package:ardico_test/ui/pages/info_page/info_page.dart';
+import 'package:ardico_test/ui/pages/link_data_page/link_data_page.dart';
 import 'package:ardico_test/ui/views/bottom_bar_button.dart';
 import 'package:ardico_test/ui/views/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   void _navigateToInfoPage(String info) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => InfoPage(info: info),
+        builder: (_) => LinkDataPage(info: info),
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:ardico_test/resources/app_colors.dart';
 import 'package:ardico_test/resources/strings.dart';
 import 'package:ardico_test/ui/pages/home_page/home_page.dart';
-import 'package:ardico_test/ui/pages/info_page/info_page.dart';
+import 'package:ardico_test/ui/pages/link_data_page/link_data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uni_links/uni_links.dart';
@@ -31,33 +31,29 @@ class _MyAppState extends State<MyApp> {
 
   void _navigateToInfoPage(String info) {
     setState(() {
-      _initialPage = InfoPage(info: info ?? Strings.errorMessage);
+      _initialPage = LinkDataPage(info: info ?? Strings.generalErrorMessage);
     });
   }
 
-  /// An implementation using a [String] link
   _initPlatformStateForStringUniLinks() async {
-    // Attach a listener to the links stream
     _deepLinksSubscription = getLinksStream().listen(
       (String link) {
         if (!mounted) return;
-        _navigateToInfoPage(link ?? Strings.errorMessage);
+        _navigateToInfoPage(link ?? Strings.generalErrorMessage);
       },
       onError: (err) {
         if (!mounted) return;
-        _navigateToInfoPage('Failed to get latest link: $err.');
+        _navigateToInfoPage(err.toString());
       },
     );
 
-    // Get the latest link
     String initialLink;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       initialLink = await getInitialLink();
     } on PlatformException {
-      initialLink = 'Failed to get initial link.';
+      initialLink = Strings.errorGettingInitialLinkMessage;
     } on FormatException {
-      initialLink = 'Failed to parse the initial link as Uri.';
+      initialLink = Strings.errorParsingUri;
     }
 
     // If the widget was removed from the tree while the asynchronous platform

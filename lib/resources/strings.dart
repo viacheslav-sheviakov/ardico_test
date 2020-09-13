@@ -1,7 +1,9 @@
 class Strings {
   // General
   static const appName = "Ardico Test";
-  static const errorMessage = "Oops... No data retrieved 🤷";
+  static const generalErrorMessage = "Oops... Something's wrong 🤷";
+  static const errorGettingInitialLinkMessage = "Failed to get initial link";
+  static const errorParsingUri = "Failed to parse the initial link as Uri.";
 
   // Splash Page
   static const startButtonLabel = "Start";
