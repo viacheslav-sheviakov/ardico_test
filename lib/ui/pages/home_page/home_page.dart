@@ -2,6 +2,7 @@ import 'package:ardico_test/resources/app_colors.dart';
 import 'package:ardico_test/resources/constants.dart';
 import 'package:ardico_test/resources/strings.dart';
 import 'package:ardico_test/ui/views/bottom_bar_button.dart';
+import 'package:ardico_test/ui/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -11,34 +12,65 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  WebViewController _controller;
-  bool _isLoading = false;
+  WebViewController _webViewController;
+  bool _isWebViewLoading = false;
+  int _displayIndex = 0;
+
+  void _onStartPressed() {
+    setState(() {
+      _displayIndex = 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            WebView(
-              onPageStarted: (_) => setState(() {
-                _isLoading = true;
-              }),
-              onPageFinished: (_) => setState(() {
-                _isLoading = false;
-              }),
-              initialUrl: Constants.exploreRusspassUrl,
-              onWebViewCreated: (WebViewController webViewController) {
-                _controller = webViewController;
-              },
-              javascriptMode: JavascriptMode.unrestricted,
-              initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-            ),
-            if (_isLoading) _buildPositionedLoader(),
-          ],
-        ),
+      body: IndexedStack(
+        index: _displayIndex,
+        children: [
+          SplashView(
+            onButtonPressed: _onStartPressed,
+          ),
+          _buildPageContents(),
+        ],
       ),
-      bottomNavigationBar: _buildBottomBar(),
+    );
+  }
+
+  Widget _buildPageContents() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: SafeArea(
+            child: _buildWebView(),
+          ),
+        ),
+        _buildBottomBar(),
+      ],
+    );
+  }
+
+  Widget _buildWebView() {
+    return Stack(
+      children: [
+        WebView(
+          onPageStarted: (_) => setState(() {
+            _isWebViewLoading = true;
+          }),
+          onPageFinished: (_) => setState(() {
+            _isWebViewLoading = false;
+          }),
+          initialUrl: Constants.exploreRusspassUrl,
+          onWebViewCreated: (WebViewController webViewController) {
+            _webViewController = webViewController;
+          },
+          javascriptMode: JavascriptMode.unrestricted,
+          initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+        ),
+        if (_isWebViewLoading) _buildPositionedLoader(),
+      ],
     );
   }
 
@@ -71,19 +103,27 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         children: [
           Expanded(
-            child: BottomBarButton(
-              text: Strings.exploreButtonLabel,
-              onTap: () => _controller.loadUrl(Constants.exploreRusspassUrl),
-            ),
+            child: _buildExploreButton(),
           ),
           Expanded(
-            child: BottomBarButton(
-              text: Strings.ticketsButtonLabel,
-              onTap: () => _controller.loadUrl(Constants.aviaTicketsUrl),
-            ),
+            child: _buildTicketsButton(),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildExploreButton() {
+    return BottomBarButton(
+      text: Strings.exploreButtonLabel,
+      onTap: () => _webViewController.loadUrl(Constants.exploreRusspassUrl),
+    );
+  }
+
+  Widget _buildTicketsButton() {
+    return BottomBarButton(
+      text: Strings.ticketsButtonLabel,
+      onTap: () => _webViewController.loadUrl(Constants.aviaTicketsUrl),
     );
   }
 }
