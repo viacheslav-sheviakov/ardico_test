@@ -16,9 +16,9 @@ class AppStyles {
 
   static const bottomBarButton = TextStyle(
     color: Colors.white,
-    fontSize: 12.0,
+    fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    letterSpacing: 1.2,
+    letterSpacing: 1.5,
   );
 
   static const bottomBarShadows = [

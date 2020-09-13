@@ -18,10 +18,12 @@ class _HomePageState extends State<HomePage> {
   WebViewController _webViewController;
   bool _isWebViewLoading = false;
   int _displayIndex = 0;
+  bool _isSplashGone = false;
 
   void _onStartPressed() {
     setState(() {
       _displayIndex = 1;
+      _isSplashGone = true;
     });
   }
 
@@ -54,22 +56,14 @@ class _HomePageState extends State<HomePage> {
           _buildPageContents(),
         ],
       ),
+      bottomNavigationBar: _isSplashGone ? _buildBottomBar() : null,
     );
   }
 
   Widget _buildPageContents() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: SafeArea(
-            bottom: false,
-            child: _buildWebView(),
-          ),
-        ),
-        _buildBottomBar(),
-      ],
+    return SafeArea(
+      bottom: false,
+      child: _buildWebView(),
     );
   }
 
