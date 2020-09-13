@@ -18,10 +18,12 @@ class _HomePageState extends State<HomePage> {
   WebViewController _webViewController;
   bool _isWebViewLoading = false;
   int _displayIndex = 0;
+  bool _isSplashGone = false;
 
   void _onStartPressed() {
     setState(() {
       _displayIndex = 1;
+      _isSplashGone = true;
     });
   }
 
@@ -54,21 +56,14 @@ class _HomePageState extends State<HomePage> {
           _buildPageContents(),
         ],
       ),
+      bottomNavigationBar: _isSplashGone ? _buildBottomBar() : null,
     );
   }
 
   Widget _buildPageContents() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: SafeArea(
-            child: _buildWebView(),
-          ),
-        ),
-        _buildBottomBar(),
-      ],
+    return SafeArea(
+      bottom: false,
+      child: _buildWebView(),
     );
   }
 
@@ -111,8 +106,13 @@ class _HomePageState extends State<HomePage> {
       height: double.infinity,
       color: AppColors.primaryOpacity75,
       child: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryDark),
+        child: SizedBox(
+          width: 64.0,
+          height: 64.0,
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryDark),
+            strokeWidth: 6.0,
+          ),
         ),
       ),
     );
@@ -121,15 +121,18 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBottomBar() {
     return Material(
       color: AppColors.primary,
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildExploreButton(),
-          ),
-          Expanded(
-            child: _buildTicketsButton(),
-          ),
-        ],
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: [
+            Expanded(
+              child: _buildExploreButton(),
+            ),
+            Expanded(
+              child: _buildTicketsButton(),
+            ),
+          ],
+        ),
       ),
     );
   }

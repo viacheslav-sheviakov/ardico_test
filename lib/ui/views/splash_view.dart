@@ -1,5 +1,6 @@
 import 'package:ardico_test/resources/app_colors.dart';
 import 'package:ardico_test/resources/app_styles.dart';
+import 'package:ardico_test/resources/image_assets.dart';
 import 'package:ardico_test/resources/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -34,11 +35,35 @@ class SplashView extends StatelessWidget {
   Widget _buildTitle() {
     return Expanded(
       child: Center(
-        child: Text(
-          Strings.appName,
-          style: AppStyles.splashTitle,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildAppLogo(),
+            _buildTitleText(),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAppLogo() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 64.0,
+        vertical: 32.0,
+      ),
+      child: Image.asset(
+        ImageAssets.appLogo,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  Widget _buildTitleText() {
+    return Text(
+      Strings.appName,
+      style: AppStyles.splashTitle,
     );
   }
 

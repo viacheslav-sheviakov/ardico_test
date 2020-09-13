@@ -10,7 +10,7 @@ class Strings {
 
   // Home Page
   static const exploreButtonLabel = "Explore";
-  static const ticketsButtonLabel = "Avia Tickets";
+  static const ticketsButtonLabel = "Tickets";
 
   // Info Page
   static const infoPageTitle = "Info Page";
