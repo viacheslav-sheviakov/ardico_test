@@ -12,6 +12,6 @@ class Strings {
   static const exploreButtonLabel = "Explore";
   static const ticketsButtonLabel = "Tickets";
 
-  // Info Page
-  static const infoPageTitle = "Info Page";
+  // Link Data Page
+  static const linkDataPageTitle = "Link Data";
 }
