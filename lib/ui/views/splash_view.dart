@@ -1,28 +1,24 @@
 import 'package:ardico_test/resources/app_colors.dart';
 import 'package:ardico_test/resources/app_styles.dart';
+import 'package:ardico_test/resources/image_assets.dart';
 import 'package:ardico_test/resources/strings.dart';
-import 'package:ardico_test/ui/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
-class SplashPage extends StatefulWidget {
-  @override
-  _SplashPageState createState() => _SplashPageState();
-}
+class SplashView extends StatelessWidget {
+  final VoidCallback onButtonPressed;
 
-class _SplashPageState extends State<SplashPage> {
-  void _navigateHome() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => HomePage()),
-      (route) => false,
-    );
-  }
+  const SplashView({
+    Key key,
+    @required this.onButtonPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
       body: Container(
         width: double.infinity,
+        height: double.infinity,
+        color: AppColors.primary,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,11 +35,35 @@ class _SplashPageState extends State<SplashPage> {
   Widget _buildTitle() {
     return Expanded(
       child: Center(
-        child: Text(
-          Strings.appName,
-          style: AppStyles.splashTitle,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildAppLogo(),
+            _buildTitleText(),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAppLogo() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 64.0,
+        vertical: 32.0,
+      ),
+      child: Image.asset(
+        ImageAssets.appLogo,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  Widget _buildTitleText() {
+    return Text(
+      Strings.appName,
+      style: AppStyles.splashTitle,
     );
   }
 
@@ -61,7 +81,7 @@ class _SplashPageState extends State<SplashPage> {
           Strings.startButtonLabel.toUpperCase(),
           style: AppStyles.appButtonText,
         ),
-        onPressed: _navigateHome,
+        onPressed: onButtonPressed,
       ),
     );
   }
