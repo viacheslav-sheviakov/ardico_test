@@ -1,11 +1,11 @@
 import 'package:ardico_test/resources/app_styles.dart';
 import 'package:flutter/material.dart';
 
-class BottomBarButton extends StatelessWidget {
+class AppBottomBarButton extends StatelessWidget {
   final String text;
   final void Function() onTap;
 
-  const BottomBarButton({
+  const AppBottomBarButton({
     Key key,
     @required this.text,
     @required this.onTap,
