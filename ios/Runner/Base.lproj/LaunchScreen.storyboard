@@ -18,12 +18,6 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LauncgScreen" translatesAutoresizingMaskIntoConstraints="NO" id="D8D-tr-GEC">
-                                <rect key="frame" x="87" y="325" width="240" height="246"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" red="0.12547165160000001" green="0.12550082800000001" blue="0.1254698336" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.12547165160000001" green="0.12550082800000001" blue="0.1254698336" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -33,7 +27,4 @@
             <point key="canvasLocation" x="76.811594202898561" y="251.11607142857142"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="LauncgScreen" width="848" height="897"/>
-    </resources>
 </document>
